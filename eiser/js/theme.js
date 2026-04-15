@@ -1,4 +1,4 @@
-; (function ($) {
+/* ; (function ($) {
     "use strict"
 
 
@@ -7,7 +7,10 @@
 	  Navbar 
 	-------------------------------------------------------------------------------*/
 
-    //* Navbar Fixed  
+    //* Navbar Fixed
+    
+    /*
+
     function navbarFixed() {
         if ($('.header_area').length) {
             $(window).scroll(function () {
@@ -26,6 +29,8 @@
     /*----------------------------------------------------*/
     /*  Parallax Effect js
     /*----------------------------------------------------*/
+
+    /* 
     function parallaxEffect() {
         $('.bg-parallax').parallax();
     }
@@ -78,6 +83,8 @@
     /*----------------------------------------------------*/
     /*  MailChimp Slider
     /*----------------------------------------------------*/
+
+    /*
     function mailChimp() {
         $('#mc_embed_signup').find('form').ajaxChimp();
     }
@@ -88,6 +95,8 @@
     /*----------------------------------------------------*/
     /*  Simple LightBox js
     /*----------------------------------------------------*/
+
+    /*
     $('.imageGallery1 .light').simpleLightbox();
 
     $('.counter').counterUp({
@@ -132,6 +141,9 @@
     /*----------------------------------------------------*/
     /*  Members Slider
     /*----------------------------------------------------*/
+
+    /*
+
     function product_slider() {
         if ($('.feature_p_slider').length) {
             $('.feature_p_slider').owlCarousel({
@@ -167,6 +179,9 @@
     /*----------------------------------------------------*/
     /*  Clients Slider
     /*----------------------------------------------------*/
+
+    /*
+
     function clients_slider() {
         if ($('.clients_slider').length) {
             $('.clients_slider').owlCarousel({
@@ -203,6 +218,9 @@
     /*----------------------------------------------------*/
     /*  Jquery Ui slider js
     /*----------------------------------------------------*/
+
+    /*
+
     if ($("#slider-range").length > 0) {
         $("#slider-range").slider({
             range: true,
@@ -223,6 +241,8 @@
     /*----------------------------------------------------*/
     /*  Google map js
     /*----------------------------------------------------*/
+
+    /*
 
     if ($('#mapBox').length) {
         var $lat = $('#mapBox').data('lat');
@@ -433,3 +453,158 @@
 
 
 })(jQuery)
+
+*/
+
+;(function ($) {
+    "use strict"
+
+    var nav_offset_top = $('header').height() + 50;
+
+    function navbarFixed() {
+        if ($('.header_area').length) {
+            $(window).scroll(function () {
+                var scroll = $(window).scrollTop();
+                if (scroll >= nav_offset_top) {
+                    $(".header_area").addClass("navbar_fixed");
+                } else {
+                    $(".header_area").removeClass("navbar_fixed");
+                }
+            });
+        };
+    };
+    navbarFixed();
+
+    function parallaxEffect() {
+        $('.bg-parallax').parallax();
+    }
+    parallaxEffect();
+
+    var dropToggle = $('.widgets_inner .list li').has('ul').children('a');
+    dropToggle.on('click', function () {
+        dropToggle.not(this).closest('li').find('ul').slideUp(200);
+        $(this).closest('li').children('ul').slideToggle(200);
+        return false;
+    });
+
+    function mailChimp() {
+        $('#mc_embed_signup').find('form').ajaxChimp();
+    }
+    mailChimp();
+
+    $('select').niceSelect();
+
+    $('.imageGallery1 .light').simpleLightbox();
+
+    $('.counter').counterUp({
+        delay: 10,
+        time: 1000
+    });
+
+    function product_slider() {
+        if ($('.feature_p_slider').length) {
+            $('.feature_p_slider').owlCarousel({
+                loop: true,
+                margin: 30,
+                items: 4,
+                nav: false,
+                autoplay: false,
+                smartSpeed: 1500,
+                dots: true,
+                responsiveClass: true,
+                responsive: {
+                    0: { items: 1 },
+                    360: { items: 2 },
+                    576: { items: 3 },
+                    768: { items: 4 }
+                }
+            })
+        }
+    }
+    product_slider();
+
+    function clients_slider() {
+        if ($('.clients_slider').length) {
+            $('.clients_slider').owlCarousel({
+                loop: true,
+                margin: 30,
+                items: 5,
+                nav: false,
+                autoplay: false,
+                smartSpeed: 1500,
+                dots: false,
+                responsiveClass: true,
+                responsive: {
+                    0: { items: 1 },
+                    400: { items: 2 },
+                    575: { items: 3 },
+                    768: { items: 4 },
+                    992: { items: 5 }
+                }
+            })
+        }
+    }
+    clients_slider();
+
+    if ($("#slider-range").length > 0) {
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [10, 500],
+            slide: function (event, ui) {
+                $("#amount").val("$" + ui.values[0] + " $" + ui.values[1]);
+            }
+        });
+    }
+
+    if ($("#amount").length > 0) {
+        $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+            "   $" + $("#slider-range").slider("values", 1));
+    }
+
+    /* 🔥 GOOGLE MAP DARK STYLE */
+    if ($('#mapBox').length) {
+        var $lat = $('#mapBox').data('lat');
+        var $lon = $('#mapBox').data('lon');
+        var $zoom = $('#mapBox').data('zoom');
+
+        var map = new GMaps({
+            el: '#mapBox',
+            lat: $lat,
+            lng: $lon,
+            zoom: $zoom,
+            styles: [
+                { elementType: "geometry", stylers: [{ color: "#1d2c4d" }] },
+                { elementType: "labels.text.fill", stylers: [{ color: "#8ec3b9" }] },
+                { elementType: "labels.text.stroke", stylers: [{ color: "#1a3646" }] },
+                {
+                    featureType: "road",
+                    elementType: "geometry",
+                    stylers: [{ color: "#304a7d" }]
+                },
+                {
+                    featureType: "road",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#98a5be" }]
+                },
+                {
+                    featureType: "water",
+                    elementType: "geometry",
+                    stylers: [{ color: "#0e1626" }]
+                },
+                {
+                    featureType: "poi",
+                    elementType: "geometry",
+                    stylers: [{ color: "#283d6a" }]
+                },
+                {
+                    featureType: "administrative",
+                    elementType: "geometry",
+                    stylers: [{ color: "#3a4762" }]
+                }
+            ]
+        });
+    }
+
+})(jQuery);
